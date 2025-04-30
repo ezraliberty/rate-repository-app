@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 
@@ -58,16 +57,6 @@ const repositories = [
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
-    // const [selectedRepo, setSelectedRepo] = useState(null)
-
-
-    // renderItem={renderItem} keyExtractor={repository => repository} extraData={selectedRepo}
-    // const renderItem = ({selectedRepo}) => {
-    //     return (
-    //         <RepositoryItem repository={selectedRepo} onPress={()=> setSelectedRepo()}/>
-    //     )
-    // };
-
   return (
     <FlatList data={repositories} ItemSeparatorComponent={ItemSeparator} renderItem={({item}) => <RepositoryItem repository={item}/>}/>
   );
