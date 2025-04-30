@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
     padding: 5,
+    margin: 2,
   },
   tagText: {
     color: theme.colors.cardColor,
