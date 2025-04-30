@@ -1,17 +1,10 @@
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable } from "react-native";
 import Text from "./Text";
-
-const styles = StyleSheet.create({
-    textCol: {
-        color: "#fff",
-    }
-})
-
 
 const AppBarTab = ({item}) => {
     return (
         <Pressable>
-            <Text>{item.title}</Text>
+            <Text color="navText" fontWeight="bold">{item.title}</Text>
         </Pressable>
     )
 }

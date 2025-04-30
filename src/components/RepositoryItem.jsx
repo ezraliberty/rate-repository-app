@@ -1,6 +1,7 @@
 import { View, StyleSheet, Image } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
+import Counter from "./Counter";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,17 +14,19 @@ const styles = StyleSheet.create({
   },
   tag: {
     backgroundColor: theme.colors.primary,
-    color: theme.colors.cardColor,
     alignSelf: "flex-start",
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
     padding: 5,
+  },
+  tagText: {
+    color: theme.colors.cardColor,
   },
   ratingsContainer: {
     flexDirection: "row",
-    gap: 10,
-  },
-  dataContainer: {
-    flexDirection: "column",
-    alignItems: "center",
+    gap: 20,
   },
 });
 
@@ -42,25 +45,15 @@ const RepositoryItem = ({ repository }) => {
             {repository.fullName}
           </Text>
           <Text>{repository.description}</Text>
-          <Text style={styles.tag}>{repository.language}</Text>
-        </View>
-      </View>
-      <View style={styles.ratingsContainer}>
-        <View style={styles.dataContainer}>
-          <Text>{repository.stargazersCount}</Text>
-          <Text>Stars</Text>
-        </View>
-        <View style={styles.dataContainer}>
-          <Text>{repository.forksCount}</Text>
-          <Text>Forks</Text>
-        </View>
-        <View style={styles.dataContainer}>
-          <Text>{repository.reviewCount}</Text>
-          <Text>Reviews</Text>
-        </View>
-        <View style={styles.dataContainer}>
-          <Text>{repository.ratingAverage}</Text>
-          <Text>Rating</Text>
+          <View style={styles.tag}>
+            <Text style={styles.tagText}>{repository.language}</Text>
+          </View>
+          <View style={styles.ratingsContainer}>
+            <Counter numberValue={repository.stargazersCount} countName={"Stars"} />
+            <Counter numberValue={repository.forksCount} countName={"Forks"} />
+            <Counter numberValue={repository.reviewCount} countName={"Reviews"} />
+            <Counter numberValue={repository.ratingAverage} countName={"Rating"} />
+          </View>
         </View>
       </View>
     </View>

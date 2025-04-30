@@ -6,10 +6,11 @@ import AppBarTab from "./AppBarTab";
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
-    height: 200,
+    height: 100,
     backgroundColor: theme.colors.textPrimary,
+    justifyContent: "center",
+    padding: 10,
   },
-  // ...
 });
 
 const navigationItems = [{ title: "Repositories", key: "repositories" }];
