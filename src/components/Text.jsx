@@ -1,6 +1,8 @@
-import { Text as NativeText, StyleSheet } from 'react-native';
+import { Text as NativeText, StyleSheet, Platform } from 'react-native';
 
 import theme from '../theme';
+import FontIOS from './Font.ios';
+import FontAndroid from './Font.android';
 
 const styles = StyleSheet.create({
   text: {
@@ -27,8 +29,11 @@ const styles = StyleSheet.create({
 });
 
 const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
+  const platformFont = Platform.OS === "ios" ? FontIOS.main : FontAndroid.main;
+
   const textStyle = [
     styles.text,
+    platformFont,
     color === 'textSecondary' && styles.colorTextSecondary,
     color === 'primary' && styles.colorPrimary,
     color === 'navText' && styles.navColorPrimary,

@@ -61,7 +61,7 @@ const SignInForm = ({ onSubmit }) => {
         onChangeText={formik.handleChange("username")}
       />
       {formik.touched.username && formik.errors.username && (
-        <Text style={{ color: "red" }}>{formik.errors.username}</Text>
+        <Text style={{ color: "red", padding: 10 }}>{formik.errors.username}</Text>
       )}
       <TextInput
         style={[
@@ -75,7 +75,7 @@ const SignInForm = ({ onSubmit }) => {
         secureTextEntry
       />
       {formik.touched.password && formik.errors.password && (
-        <Text style={{ color: "red" }}>{formik.errors.password}</Text>
+        <Text style={{ color: "red", padding: 10 }}>{formik.errors.password}</Text>
       )}
       <Pressable onPress={formik.handleSubmit}>
         <Text style={styles.button}>Sign In</Text>
