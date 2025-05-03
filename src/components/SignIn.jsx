@@ -3,6 +3,7 @@ import Text from "./Text";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import theme from "../theme";
+import useSignIn from "../hooks/useSignIn";
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +62,9 @@ const SignInForm = ({ onSubmit }) => {
         onChangeText={formik.handleChange("username")}
       />
       {formik.touched.username && formik.errors.username && (
-        <Text style={{ color: "red", padding: 10 }}>{formik.errors.username}</Text>
+        <Text style={{ color: "red", padding: 10 }}>
+          {formik.errors.username}
+        </Text>
       )}
       <TextInput
         style={[
@@ -75,7 +78,9 @@ const SignInForm = ({ onSubmit }) => {
         secureTextEntry
       />
       {formik.touched.password && formik.errors.password && (
-        <Text style={{ color: "red", padding: 10 }}>{formik.errors.password}</Text>
+        <Text style={{ color: "red", padding: 10 }}>
+          {formik.errors.password}
+        </Text>
       )}
       <Pressable onPress={formik.handleSubmit}>
         <Text style={styles.button}>Sign In</Text>
@@ -85,13 +90,16 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
-  const onSubmit = (values) => {
-    console.log(values);
-    const username = values.username;
-    const password = values.password;
+  const [signIn] = useSignIn();
 
-    if (!username || !password) {
-      return <Text>Username and password are required</Text>;
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+
+    try {
+      const data = await signIn({ username, password });
+      console.log("data in component", data);
+    } catch (e) {
+      console.log("error", e);
     }
   };
 
