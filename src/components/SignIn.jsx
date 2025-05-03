@@ -3,7 +3,7 @@ import Text from "./Text";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import theme from "../theme";
-import useSignIn from "../hooks/useSignIn";
+import { useAuth } from "../contexts/authContext";
 import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
@@ -91,23 +91,26 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
-  const [signIn] = useSignIn();
-  const navigate = useNavigate();
+  const {signIn, state} = useAuth();
+  // const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     const { username, password } = values;
 
-    try {
-      const data = await signIn({ username, password });
-      if (data) {
-        navigate("/");
-      }
-    } catch (e) {
-      console.log("error", e);
+    const success = await signIn({ username, password });
+    if (success) {
+      // navigate("/");
+      console.log("God did")
     }
   };
 
-  return <SignInForm onSubmit={onSubmit} />;
+  return (
+    <View>
+      {state.error && <Text style={{ color: "red", padding: 10 }}>{state.error}</Text>}
+      {state.loading && <Text style={{ padding: 10 }}>Signing in...</Text>}
+      <SignInForm onSubmit={onSubmit} />
+    </View>
+  );
 };
 
 export default SignIn;
