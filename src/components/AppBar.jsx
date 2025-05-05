@@ -2,10 +2,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import Constants from "expo-constants";
 import theme from "../theme";
 import AppBarTab from "./AppBarTab";
-// import useAuth from "../hooks/useAuth";
 import { useAuth } from "../contexts/authContext";
-import Text from "./Text";
-// import useSignOut from "../hooks/useSignOut";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,14 +20,6 @@ const styles = StyleSheet.create({
 
 const AppBar = () => {
   const { state, signOut } = useAuth();
-
-  // if (state.loading) {
-  //   return <Text>Loading user data...</Text>;
-  // }
-
-  // if (state.error) {
-  //   return <Text>Error: {state.error}</Text>;
-  // }
 
   return (
     <View style={styles.container}>
