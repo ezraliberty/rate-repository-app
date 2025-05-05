@@ -35,6 +35,7 @@ module.exports = [
     plugins: {
       'react-native': reactNativePlugin,
     },
+    extends: ["eslint:recommended", "plugin:react/recommended", "plugin:jest/recommended"],
     languageOptions: {
       parser: babelParser,
       parserOptions: {
