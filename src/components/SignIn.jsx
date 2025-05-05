@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import theme from "../theme";
 import { useAuth } from "../contexts/authContext";
-import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -92,16 +91,11 @@ const SignInForm = ({ onSubmit }) => {
 
 const SignIn = () => {
   const {signIn, state} = useAuth();
-  // const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     const { username, password } = values;
 
-    const success = await signIn({ username, password });
-    if (success) {
-      // navigate("/");
-      console.log("God did")
-    }
+    await signIn({ username, password });
   };
 
   return (
