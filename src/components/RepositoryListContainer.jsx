@@ -1,3 +1,27 @@
-const RepositoryListContainer = ({ repositories }) => {}
+import { View, FlatList, StyleSheet } from "react-native";
+import RepositoryItem from "./RepositoryItem";
 
-export default RepositoryListContainer
+const styles = StyleSheet.create({
+  separator: {
+    height: 10,
+  },
+});
+
+const ItemSeparator = () => <View style={styles.separator} />;
+
+const RepositoryListContainer = ({ repositories }) => {
+  const repositoryNodes = repositories
+    ? repositories.edges.map((edge) => edge.node)
+    : [];
+
+  return (
+    <FlatList
+      data={repositoryNodes}
+      ItemSeparatorComponent={ItemSeparator}
+      renderItem={({ item }) => <RepositoryItem repository={item} />}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
+export default RepositoryListContainer;
