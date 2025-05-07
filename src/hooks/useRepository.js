@@ -8,7 +8,7 @@ const useRepository = (repositoryId) => {
     skip: !repositoryId,
   });
 
-  return { repository: data ? data.repository : undefined, loading, error };
+  return { repository: data ? data.repository : undefined, reviews: data?.repository?.reviews, loading, error };
 };
 
 export default useRepository;

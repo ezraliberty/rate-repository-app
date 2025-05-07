@@ -1,4 +1,3 @@
-// RepositoryItem.js
 import { View, StyleSheet, Image, Pressable } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
