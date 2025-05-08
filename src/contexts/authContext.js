@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import useAuthStorage from "../hooks/useAuthStorage";
 import { useApolloClient } from "@apollo/client";
-import { AUTHENTICATE_USER } from "../graphql/mutations";
+import { AUTHENTICATE_USER, CREATE_USER } from "../graphql/mutations";
 import { ME } from "../graphql/queries";
 import { useNavigate } from "react-router-native";
 
@@ -80,6 +80,24 @@ function AuthProvider({ children }) {
     }
   };
 
+  const signUp = async ({ username, password }) => {
+    dispatch({ type: "LOADING" });
+    try {
+      const { data } = await apolloClient.mutate({
+        mutation: CREATE_USER,
+        variables: { user: { username, password } },
+      });
+      if (data.createUser) {
+        await signIn({ username, password });
+        navigate("/");
+      }
+    } catch (error) {
+      dispatch({ type: "ERROR", payload: error.message });
+      dispatch({ type: "LOADING", payload: false });
+      return false;
+    }
+  };
+
   const signOut = async () => {
     dispatch({ type: "LOADING" });
     try {
@@ -128,7 +146,7 @@ function AuthProvider({ children }) {
     checkAuthOnStart();
   }, [authStorage, apolloClient]);
 
-  const value = { state, dispatch, signIn, signOut };
+  const value = { state, dispatch, signIn, signOut, signUp };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

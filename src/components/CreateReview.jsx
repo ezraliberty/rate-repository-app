@@ -124,9 +124,9 @@ const CreateReview = () => {
           onChangeText={formik.handleChange("repositoryName")}
           testID="RepositoryInput"
         />
-        {formik.touched.password && formik.errors.password && (
+        {formik.touched.repositoryName && formik.errors.repositoryName && (
           <Text style={styles.errorText} testID="passwordError">
-            {formik.errors.password}
+            {formik.errors.repositoryName}
           </Text>
         )}
       </View>
