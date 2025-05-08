@@ -2,21 +2,29 @@ import { useMutation } from "@apollo/client";
 import { CREATE_REVIEW } from "../graphql/mutations";
 
 const useReviews = () => {
-  const [createReview, data] = useMutation(CREATE_REVIEW);
+  const [addReview, {data, loading, error}] = useMutation(CREATE_REVIEW);
   console.log("useReviews", data);
 
-  const createdReview = async ({ ownerName, repositoryName, rating, text }) => {
-    const review = {
-      ownerName,
-      repositoryName,
-      rating: Number(rating),
-      text,
-    };
-    const { data } = await createReview({ variables: { review } });
-    return data;
+  const newReview = async ({ ownerName, repositoryName, rating, text }) => {
+    try {
+      const { data: mutationData } = await addReview({
+        variables: {
+          review: {
+            ownerName,
+            repositoryName,
+            rating: Number(rating),
+            text,
+          },
+        },
+      });
+      return mutationData?.createReview;
+    } catch (err) {
+      console.error("Error in newReview:", err);
+      throw err;
+    }
   };
 
-  return [createdReview, data];
+  return {newReview, loading, error};
 };
 
 export default useReviews;

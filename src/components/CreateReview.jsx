@@ -4,8 +4,8 @@ import Text from "./Text";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import theme from "../theme";
-import { useReviews } from "../hooks/useReviews";
-// import { useAuth } from "../contexts/authContext";
+import useReviews from "../hooks/useReviews";
+import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -56,30 +56,33 @@ const validationSchema = yup.object().shape({
     .number()
     .required("Rating is required")
     .min(5, "Rating must be between 0 - 100"),
-  review: yup
-    .string()
-    .min(5, "Review must be at least 5 characters long"),
+  review: yup.string().min(5, "Review must be at least 5 characters long"),
 });
 
 const CreateReview = () => {
-  const [createReview] = useReviews();
-  console.log("CreateReview");
-  
+  const { newReview, loading, error } = useReviews();
+  const navigate = useNavigate();
+
   const onSubmit = async (values) => {
     const { username, repositoryName, rating, review } = values;
     try {
-      await createReview({
+      const addedReviewData = await newReview({
         ownerName: username,
         repositoryName,
         rating: Number(rating),
         text: review,
       });
-      formik.resetForm();
+      if (addedReviewData && addedReviewData.repositoryId) {
+        alert(
+          `Review "${addedReviewData.text}" successfully added to ${addedReviewData.repository.name}`
+        );
+        navigate(`/${addedReviewData.repositoryId}`);
+      }
     } catch (error) {
       console.error("Error creating review:", error);
     }
-  }
-  
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -119,7 +122,6 @@ const CreateReview = () => {
           placeholder="Repository Name"
           value={formik.values.repositoryName}
           onChangeText={formik.handleChange("repositoryName")}
-          secureTextEntry
           testID="RepositoryInput"
         />
         {formik.touched.password && formik.errors.password && (
