@@ -1,7 +1,8 @@
+import React from "react";
 import { View, FlatList, StyleSheet, Pressable } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import { useNavigate } from "react-router-native";
-import FilterPicker from "./FIlterPicker";
+import Filter from "./FIlter";
 
 const styles = StyleSheet.create({
   separator: {
@@ -11,27 +12,73 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryListContainer = ({ repositories, sort, onSortChange }) => {
-  const navigate = useNavigate();
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : [];
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    const props = this.props;
+    const onChangeSearch = (query) => props.setSearchQuery(query);
 
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => (
-        <Pressable onPress={() => navigate(`/${item.id}`)}>
-          <RepositoryItem repository={item} />
-        </Pressable>
-      )}
-      keyExtractor={(item) => item.id}
-      ListHeaderComponent={
-        <FilterPicker sort={sort} onSortChange={onSortChange} />
-      }
-    />
-  );
+    return (
+      <>
+        <Filter
+          sort={props.sort}
+          onSortChange={props.onSortChange}
+          searchQuery={props.searchQuery}
+          onTextChange={onChangeSearch}
+        />
+      </>
+    );
+  };
+
+  render() {
+    const props = this.props;
+    const repositoryNodes = props.repositories
+      ? props.repositories.edges.map((edge) => edge.node)
+      : [];
+
+    return (
+      <FlatList
+        data={repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => props.navigate(`/${item.id}`)}>
+            <RepositoryItem repository={item} />
+          </Pressable>
+        )}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={this.renderHeader}
+      />
+    );
+  }
+}
+
+const RepositoryListContainerWithNavigation = (props) => {
+  const navigate = useNavigate();
+  return <RepositoryListContainer {...props} navigate={navigate} />;
 };
 
-export default RepositoryListContainer;
+export default RepositoryListContainerWithNavigation;
+
+// = ({ repositories, sort, onSortChange, searchQuery, onTextChange }) => {
+//   const navigate = useNavigate();
+//   const repositoryNodes = repositories
+//     ? repositories.edges.map((edge) => edge.node)
+//     : [];
+
+//   return (
+//     <FlatList
+//       data={repositoryNodes}
+//       ItemSeparatorComponent={ItemSeparator}
+//       renderItem={({ item }) => (
+//         <Pressable onPress={() => navigate(`/${item.id}`)}>
+//           <RepositoryItem repository={item} />
+//         </Pressable>
+//       )}
+//       keyExtractor={(item) => item.id}
+//       ListHeaderComponent={
+//         <Filter sort={sort} onSortChange={onSortChange} searchQuery={searchQuery} onTextChange={onTe} />
+//       }
+//     />
+//   );
+// };
+
+// export default RepositoryListContainer;
