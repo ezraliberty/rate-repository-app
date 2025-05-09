@@ -57,28 +57,3 @@ const RepositoryListContainerWithNavigation = (props) => {
 };
 
 export default RepositoryListContainerWithNavigation;
-
-// = ({ repositories, sort, onSortChange, searchQuery, onTextChange }) => {
-//   const navigate = useNavigate();
-//   const repositoryNodes = repositories
-//     ? repositories.edges.map((edge) => edge.node)
-//     : [];
-
-//   return (
-//     <FlatList
-//       data={repositoryNodes}
-//       ItemSeparatorComponent={ItemSeparator}
-//       renderItem={({ item }) => (
-//         <Pressable onPress={() => navigate(`/${item.id}`)}>
-//           <RepositoryItem repository={item} />
-//         </Pressable>
-//       )}
-//       keyExtractor={(item) => item.id}
-//       ListHeaderComponent={
-//         <Filter sort={sort} onSortChange={onSortChange} searchQuery={searchQuery} onTextChange={onTe} />
-//       }
-//     />
-//   );
-// };
-
-// export default RepositoryListContainer;

@@ -28,6 +28,7 @@ const AppBar = () => {
         {state.isAuthenticated && state.user ? (
           <>
             <AppBarTab title="Create a review" to="/review" />
+            <AppBarTab title="My reviews" to="/reviews" />
             <AppBarTab title="Sign out" onPress={signOut} />
           </>
         ) : (

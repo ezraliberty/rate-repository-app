@@ -116,9 +116,10 @@ function AuthProvider({ children }) {
     try {
       const { data, error } = await apolloClient.query({
         query: ME,
-        fetchPolicy: "cache-first",
+        fetchPolicy: "network-only",
       });
 
+      console.log("User data:", data);
       if (error) {
         dispatch({ type: "ERROR", payload: error.message });
         dispatch({ type: "SET_USER", payload: null });
