@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 const RepositoryItem = ({ repository, showGitHubButton = false }) => {
   return (
     <View style={styles.container} testID="repositoryItem">
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Image
           style={styles.logo}
           source={{ uri: repository.ownerAvatarUrl }}

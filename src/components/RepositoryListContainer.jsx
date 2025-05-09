@@ -1,6 +1,7 @@
 import { View, FlatList, StyleSheet, Pressable } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import { useNavigate } from "react-router-native";
+import FilterPicker from "./FIlterPicker";
 
 const styles = StyleSheet.create({
   separator: {
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryListContainer = ({ repositories }) => {
+const RepositoryListContainer = ({ repositories, sort, onSortChange }) => {
   const navigate = useNavigate();
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -26,6 +27,9 @@ const RepositoryListContainer = ({ repositories }) => {
         </Pressable>
       )}
       keyExtractor={(item) => item.id}
+      ListHeaderComponent={
+        <FilterPicker sort={sort} onSortChange={onSortChange} />
+      }
     />
   );
 };

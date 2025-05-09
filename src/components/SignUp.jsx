@@ -64,7 +64,7 @@ const SignUp = () => {
     try {
       await signUp({ username, password });
     } catch (error) {
-      console.error("Error creating review:", error);
+      console.error("Error creating user:", error);
     }
   };
 
@@ -75,7 +75,7 @@ const SignUp = () => {
   });
 
   return (
-    <View style={styles.container} testID="ReviewContainer">
+    <View style={styles.container} testID="SignUpContainer">
       {state.error && <Text style={{ color: "red", padding: 10 }}>{state.error}</Text>}
       {state.loading && <Text style={{ padding: 10 }}>Signing Up...</Text>}
       <View style={styles.inputContainer}>
@@ -140,7 +140,7 @@ const SignUp = () => {
       <Pressable
         onPress={formik.handleSubmit}
         style={styles.button}
-        testID="reviewButton"
+        testID="signupButton"
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </Pressable>
