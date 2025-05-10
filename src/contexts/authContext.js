@@ -111,15 +111,15 @@ function AuthProvider({ children }) {
     }
   };
 
-  const fetchUser = async () => {
+  const fetchUser = async (includeReviews = false) => {
     dispatch({ type: "LOADING" });
     try {
       const { data, error } = await apolloClient.query({
         query: ME,
+        variables: { includeReviews },
         fetchPolicy: "network-only",
       });
 
-      console.log("User data:", data);
       if (error) {
         dispatch({ type: "ERROR", payload: error.message });
         dispatch({ type: "SET_USER", payload: null });
@@ -147,7 +147,7 @@ function AuthProvider({ children }) {
     checkAuthOnStart();
   }, [authStorage, apolloClient]);
 
-  const value = { state, dispatch, signIn, signOut, signUp };
+  const value = { state, dispatch, signIn, signOut, signUp, fetchUser };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
