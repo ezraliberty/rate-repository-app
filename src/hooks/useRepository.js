@@ -5,7 +5,6 @@ const useRepository = (repositoryId) => {
   let variables = {
     repositoryId,
     first: 8,
-    reviewsAfter2: null,
   };
 
   const { data, error, loading, fetchMore, ...result } = useQuery(
