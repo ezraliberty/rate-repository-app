@@ -6,20 +6,55 @@ const useRepositories = (sort, searchKeyword) => {
 
   switch (sort) {
     case "highest":
-      variables = { orderBy: "RATING_AVERAGE", orderDirection: "DESC", searchKeyword };
+      variables = {
+        orderBy: "RATING_AVERAGE",
+        orderDirection: "DESC",
+        searchKeyword,
+        first: 3,
+      };
       break;
     case "lowest":
-      variables = { orderBy: "RATING_AVERAGE", orderDirection: "ASC", searchKeyword };
+      variables = {
+        orderBy: "RATING_AVERAGE",
+        orderDirection: "ASC",
+        searchKeyword,
+        first: 3,
+      };
       break;
     default:
-      variables = { orderBy: "CREATED_AT", orderDirectory: "DESC", searchKeyword };
+      variables = {
+        orderBy: "CREATED_AT",
+        orderDirectory: "DESC",
+        searchKeyword,
+        first: 3,
+      };
   }
 
-  const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: "cache-and-network",
+  const { data, error, loading, fetchMore, ...result } = useQuery(GET_REPOSITORIES, {
     variables,
+    fetchPolicy: "cache-and-network",
   });
-  return { repositories: data ? data.repositories : undefined, loading, error };
+
+  const handleFetchMore = () => {
+    const canFetchMore =
+      !loading && data && data.repositories.pageInfo.hasNextPage;
+    if (!canFetchMore) return;
+
+    return fetchMore({
+      variables: {
+        after: data.repositories.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
+
+  return {
+    repositories: data?.repositories,
+    fetchMore: handleFetchMore,
+    loading,
+    error,
+    ...result,
+  };
 };
 
 export default useRepositories;

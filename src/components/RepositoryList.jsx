@@ -7,10 +7,18 @@ const RepositoryList = () => {
   const [sort, setSort] = useState("latest");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueryDebounced] = useDebounce(searchQuery, 500);
-  const { repositories } = useRepositories(sort, searchQueryDebounced);
+  const { repositories, fetchMore } = useRepositories({
+    sort,
+    searchQueryDebounced,
+  });
 
   const handleSortChange = (value) => {
     setSort(value);
+  };
+
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    fetchMore();
   };
 
   return (
@@ -20,6 +28,7 @@ const RepositoryList = () => {
       onSortChange={handleSortChange}
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
+      onEndReach={onEndReach}
     />
   );
 };
