@@ -38,7 +38,7 @@ const ReviewItemData = ({ review, fetchUser }) => {
       [
         {
           text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
+          onPress: () => console.log("Cancelled"),
           style: "cancel",
         },
         {
