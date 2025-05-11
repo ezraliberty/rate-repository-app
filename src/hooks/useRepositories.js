@@ -10,7 +10,7 @@ const useRepositories = (sort, searchKeyword) => {
         orderBy: "RATING_AVERAGE",
         orderDirection: "DESC",
         searchKeyword,
-        first: 3,
+        repositoriesFirst2: 8,
       };
       break;
     case "lowest":
@@ -18,15 +18,15 @@ const useRepositories = (sort, searchKeyword) => {
         orderBy: "RATING_AVERAGE",
         orderDirection: "ASC",
         searchKeyword,
-        first: 3,
+        repositoriesFirst2: 8,
       };
       break;
     default:
       variables = {
         orderBy: "CREATED_AT",
-        orderDirectory: "DESC",
+        orderDirection: "DESC",
         searchKeyword,
-        first: 3,
+        repositoriesFirst2: 8,
       };
   }
 
